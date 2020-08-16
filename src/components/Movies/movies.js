@@ -8,7 +8,7 @@ class Movies extends Component {
   render() { 
     return (
       <div className="moviespage">
-        <h1>Movies Page</h1>
+        <h1>Movies Page test change</h1>
       </div>
     );
   }
