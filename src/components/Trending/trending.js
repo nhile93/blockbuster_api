@@ -19,6 +19,7 @@ class Trending extends Component {
     }})
     .then(response => {
       this.setState({movieItem: response.data})
+      console.log("trending page: ", response.data)
     })
   }
 
@@ -58,7 +59,6 @@ class Trending extends Component {
         {this.state.movieItem.map((item) =>
           <li>{item.movie.title}</li>
         )}
-        <li>test</li>
       </ul>
     );
   }

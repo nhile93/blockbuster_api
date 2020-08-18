@@ -1,35 +1,23 @@
 import React, { Component } from 'react';
 import Trending from '../Trending/trending'
+// import axios from 'axios'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {fetchTrending} from '../Redux/action'
 
 class Homepage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      movieItem: []
-    }
+    this.state = {}
   }
 
-  // componentDidMount = () =>{
+  componentDidMount = () => {
+    console.log("component Did Mount")
+		const {fetchTrending} = this.props
+		fetchTrending()
 
-  //   let request = new XMLHttpRequest();
-
-  //   request.open('GET', 'https://api.trakt.tv/movies/trending');
-
-  //   request.setRequestHeader('Content-Type', 'application/json');
-  //   request.setRequestHeader('trakt-api-version', '2');
-  //   request.setRequestHeader('trakt-api-key', '23b3672db47632c182337e01d880149387b8c1719adaffe2dfffa1c07860b628');
-
-  //   request.onreadystatechange = function () {
-  //     if (this.readyState === 4) {
-  //       console.log('Status:', this.status);
-  //       console.log('Body:', this.responseText);
-        
-  //     }
-  //     this.setState({movieItem: this.responseText})
-  //     console.log("list item: "+this.state.movieItem)
-  //   };
-
-  // }
+		console.log("trending: ",this.props.dataItem)
+  }
 
   render() {
     return (
@@ -158,6 +146,12 @@ class Homepage extends Component {
           </div>
         </div>
 
+        <ul className="trending-list">
+          {this.props.dataItem.map((item) =>
+            <li>{item.movie.title}</li>
+          )}
+        </ul>
+
         <Trending/>
 
         <div className="latestnew">
@@ -270,4 +264,10 @@ class Homepage extends Component {
   }
 }
 
-export default Homepage;
+const mapStateToProps = state =>({
+	dataItem: state.storeTrending.trendingItems
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({fetchTrending}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps) (Homepage);
